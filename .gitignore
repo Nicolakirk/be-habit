@@ -1,0 +1,6 @@
+node_modules
+.env.test
+.env.development
+playground.sql
+output.txt
+.env.production

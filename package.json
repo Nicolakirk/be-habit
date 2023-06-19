@@ -3,14 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "setup-dbs": "psql -f ./db/setup.sql",
+    "seed": "node  ./db/seeds/run-seed.js",
+    "test": " jest",
+    "prepare": "husky install",
+    "psql": "psql -f playground.sql > output.txt",
+    "start": "node ./bin/www",
+    "seed-prod": "NODE_ENV=production npm run seed"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-errors": "~1.6.3",
     "jade": "^0.29.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "pg": "^8.11.0",
+    "pg-format": "^1.0.4"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
   }
 }
