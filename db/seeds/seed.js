@@ -6,7 +6,7 @@ const {
     formatComments,
   } = require('./utils');
   
-  const seed = ({ topicData, userData, articleData, commentData, habitData }) => {
+  const seed = ({ topicData, userData, articleData, commentData, habitData, frequencyData }) => {
     return db
       .query(`DROP TABLE IF EXISTS comments;`)
       .then(() => {
@@ -21,6 +21,9 @@ const {
       .then(() => {
         return db.query(`DROP TABLE IF EXISTS topics;`);
       })
+      .then(() => {
+        return db.query(`DROP TABLE IF EXISTS frequency;`);
+      })
       
       .then(() => {
         const topicsTablePromise = db.query(`
@@ -28,6 +31,12 @@ const {
           slug VARCHAR PRIMARY KEY,
           description VARCHAR
         );`);
+        const frequencyTablePromise = db.query(`
+        CREATE TABLE frequency (
+          name VARCHAR PRIMARY KEY,
+          description VARCHAR
+        );`);
+        
   
         const usersTablePromise = db.query(`
         CREATE TABLE users (
@@ -37,7 +46,7 @@ const {
         );`);
 
   
-        return Promise.all([topicsTablePromise, usersTablePromise]);
+        return Promise.all([topicsTablePromise, frequencyTablePromise,usersTablePromise]);
       })
       .then(() => {
         return db.query(`
@@ -57,7 +66,7 @@ const {
         CREATE TABLE habits (
           habit_id SERIAL PRIMARY KEY,
          name VARCHAR NOT NULL,
-          topic VARCHAR NOT NULL REFERENCES topics(slug),
+          frequency VARCHAR NOT NULL REFERENCES frequency(name),
           owner VARCHAR NOT NULL REFERENCES users(username),
           body VARCHAR NOT NULL,
           created_at TIMESTAMP DEFAULT NOW(),
@@ -95,6 +104,14 @@ const {
   
         return Promise.all([topicsPromise, usersPromise]);
       })
+      .then(()=>{
+        const insertFrequencyQueryStr = format(
+          'INSERT INTO frequency (name, description) VALUES %L;',
+        frequencyData.map(({ name, description }) => [name, description])
+      );
+      return db.query(insertFrequencyQueryStr);
+        })
+
       .then(() => {
         const formattedArticleData = articleData.map(convertTimestampToDate);
         const insertArticlesQueryStr = format(
@@ -117,17 +134,17 @@ const {
       .then(() => {
         const formattedHabitData = habitData.map(convertTimestampToDate);
         const insertHabitQueryStr = format(
-          'INSERT INTO habits (name, topic, owner, body, created_at, amount_days, motivational_message) VALUES %L RETURNING *;',
+          'INSERT INTO habits (name, frequency, owner, body, created_at, amount_days, motivational_message) VALUES %L RETURNING *;',
           formattedHabitData.map(
             ({
               name,
-              topic,
+            frequency,
               owner,
               body,
               created_at,
               amount_days = 0,
               motivational_message,
-            }) => [name, topic, owner, body, created_at, amount_days, motivational_message]
+            }) => [name, frequency, owner, body, created_at, amount_days, motivational_message]
           )
         );
   
