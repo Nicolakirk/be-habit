@@ -28,4 +28,14 @@ module.exports = [
         amount_days: 5,
         motivational_message:"yeah you can do it"
       },
+      {
+        name: 'read more',
+        owner: 'lurker',
+        body: 'More info on your new habit ',
+        created_at: 1604728980000,
+        frequency: 'Every day',
+        amount_days: 1,
+        motivational_message:"yeah you can do it"
+      },
+      
 ];

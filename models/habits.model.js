@@ -55,6 +55,48 @@ exports.insertHabits = (ownerInput, habitBody) => {
         })
       }
 
+      exports.fetchHabits = () =>{
+   
+        let selectHabitsQueryString = `SELECT * FROM habits`;
+       
+        return db.query(selectHabitsQueryString).then((result) => {
+        
+         return result.rows;
+       });
+     };
 
+     exports.fetchHabitsByOwner = (ownerOfHabit) =>{
+     
+ const { owner } = ownerOfHabit;
+
+ console.log(owner)
+      let selectHabitsByOwnerQueryString = `SELECT * FROM habits WHERE owner = $1`;
+     
+      return db.query(selectHabitsByOwnerQueryString,[owner]).then((result) => {
+      
+       return result.rows;
+     });
+   };
   
+   exports.removeHabitById = (id) =>{
+      
+    const psqlDeleteQuery = ` 
+    DELETE FROM habits
+    WHERE habit_id = $1; `
+   
+    const firstPsqlQuery = `SELECT * FROM habits WHERE habit_id = $1 ;`
+    
+    return db.query(firstPsqlQuery,[id] )
+    .then((results) => {
+       
+        if (results.rows.length === 0){
+            return Promise.reject({ status: 404, msg: "Not found" });
+        } else { return db.query(psqlDeleteQuery, [id])
+            
+        
+        }}).then((results) =>{
+
+            return results
+        })
+        } 
  

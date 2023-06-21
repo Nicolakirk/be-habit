@@ -202,5 +202,81 @@ describe("PATCH /api/habits/:habitid  request", () => {
                   })
             });
     })
+    describe("GET/api/habits", () => {
+        test("status:200 - responds with an array of habits, with all properties", () => {
+            return request(app)
+                .get("/api/habits")
+                .expect(200)
+                .then(({ body }) => {
+                    const { habits } = body;
+                    expect(habits).toBeInstanceOf(Array);
+                    expect(habits).toHaveLength(4);
+                    habits.forEach((habit) => {
+                        expect(habit).toMatchObject({
+                            name: expect.any(String),
+                            owner: expect.any(String),
+                            body: expect.any(String),
+                            created_at: expect.any(String),
+                            frequency: expect.any(String),
+                            amount_days: expect.any(Number),
+                            motivational_message: expect.any(String),
 
+                        });
+                    });
+                })
+            })
+        });
+        describe("GET/api/:owner/", () => {
+            test("status:200 - responds with an array of habits for an owner, with all properties", () => {
+                return request(app)
+                    .get("/api/owner/habits/lurker")
+                    .expect(200)
+                    .then(({ body }) => {
+                        
+                        const { habits } = body;
+                        expect(habits).toBeInstanceOf(Array);
+                        expect(habits).toHaveLength(2);
+                        habits.forEach((habit) => {
+                            expect(habit).toMatchObject({
+                                name: expect.any(String),
+                                owner: expect.any(String),
+                                body: expect.any(String),
+                                created_at: expect.any(String),
+                                frequency: expect.any(String),
+                                amount_days: expect.any(Number),
+                                motivational_message: expect.any(String),
+    
+                            });
+                        });
+                    })
+                })
+            })
+
+            describe(". DELETE /api/habits/:habit_id",()=>{
+                test("Status 204 ,deletes habit and returns 204 status, checks the array has removed one comment",()=>{
+                    return request(app)
+                    .delete("/api/habits/1")
+                    .expect(204);
+                        
+                })
+            })
+                test("Status 404  responds with an error message when habit id does not exist",()=>{
+                    return request(app)
+                    .delete("/api/habits/2005")
+                    .expect(404) 
+                    .then(({ body }) => {
+                        expect(body.msg).toBe("Not found");
+                         })
+                        
+            })
+            test("Status 400  responds with an error message when habit id is a string",()=>{
+                return request(app)
+                .delete("/api/habits/letters")
+                .expect(400) 
+                .then(({ body }) => {
+                    expect(body.msg).toBe("Bad Request");
+                     })
+                    
+            })
+            
     
