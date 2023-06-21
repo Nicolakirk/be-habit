@@ -29,4 +29,4 @@ module.exports = [
         amount_days: 0,
         motivational_message:"yeah you can do it"
       },
-];
+    ]
