@@ -1,13 +1,15 @@
 const express = require("express");
+const app = express();
 const { getTopics } = require("./controllers/topic.controllers");
 const { badRoute, handleCustomErrors, handlePSQL400s, handle500Statuses } = require("./controllers/error_controllers");
 const { getFrequency } = require("./controllers/frequency.controllers");
 const { postHabits, patchDaysforHabits, getHabitsById, getHabitsByOwner, getHabits, deleteComments, deleteHabits } = require("./controllers/habits.controllers");
-
-app.use(cors());
 const cors = require('cors');
 
-const app = express();
+
+
+
+app.use(cors());
 app.use(express.json());
 
 
