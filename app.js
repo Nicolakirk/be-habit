@@ -4,7 +4,7 @@ const { badRoute, handleCustomErrors, handlePSQL400s, handle500Statuses } = requ
 const { getFrequency } = require("./controllers/frequency.controllers");
 const { postHabits, patchDaysforHabits, getHabitsById, getHabitsByOwner, getHabits, deleteComments, deleteHabits } = require("./controllers/habits.controllers");
 
-
+app.use(cors());
 const cors = require('cors');
 
 const app = express();
