@@ -10,6 +10,16 @@ module.exports = [
     
     },
     {
+      name: 'Read books',
+      owner: 'jessjelly',
+      body: 'More info on your new habit ',
+      created_at: 1604728980000,
+      frequency: "Once per week",
+      amount_days: 0,
+      motivational_message:"yeah you can do it"
+    
+    },
+    {
         name: 'excercise more',
       
         owner: 'happyamy2016',
