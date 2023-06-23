@@ -1,0 +1,99 @@
+{
+    "GET /api": {
+      "description": "serves up a json representation of all the available endpoints of the api"
+    },
+    "GET /api/topics": {
+      "description": "serves an array of all topics",
+      "queries": [],
+      "exampleResponse": {
+        "topics": [{ "slug": "eating", "description": "Eat well" }]
+      }
+    },
+    "GET /api/frequency": {
+        "description": "serves an array of all frquencies",
+        "queries": [],
+        "exampleResponse": {
+          "frequency": [{ "name": "Every day", "description": "Once a day" }]
+        }
+      },
+      "GET /api/habits": {
+        "description": "serves an array of all habits",
+        "queries": [],
+        "exampleResponse": {
+          "habits": [  {
+            "name" : "Drink more water",
+  
+            " owner": "butter_bridge",
+            " body": "More info on your new habit" ,
+             "created_at": 1604728980000,
+             "frequency": "Once per Week",
+             "amount_days": 0,
+            " motivational_message":"yeah you can do it"
+         }]
+        }
+      },
+      "POST /api/:owner/habits": {
+        "description": "Adds a habit for an user and serves an object of the  habit entered",
+       " queries": [1,2,3,4],
+        "exampleResponse": {
+          "habits": [
+            {
+               "name" : "Drink more water",
+     
+               " owner": "butter_bridge",
+               " body": "More info on your new habit" ,
+                "created_at": 1604728980000,
+                "frequency": "Once per Week",
+                "amount_days": 0,
+               " motivational_message":"yeah you can do it"
+            }
+          ]
+        }
+      },
+ 
+  "GET /api/owner/habits/:owner": {
+    "description": "serves an array of habits by the owner",
+    "queries": ["jessjelly", "butter_bridge", "amy"],
+    "exampleResponse": {
+      "habits": 
+      {
+        "name" : "Drink more water",
+
+        " owner": "butter_bridge",
+        " body": "More info on your new habit" ,
+         "created_at": 1604728980000,
+         "frequency": "Once per Week",
+         "amount_days": 0,
+        " motivational_message":"yeah you can do it"
+     }
+      
+    }
+  },
+ 
+
+  "DELETE/api/habits/:habit_id": {
+    "description": "deletes a comment by the hab habit_id",
+    "queries": [1.2,3,4],
+    "exampleResponse": {
+      "habit": []
+    }
+  },
+  "PATCH/api/habits/habit_id": {
+    "description": "Amends the day  for the comments by habit id",
+    "queries": [1.2,10,20],
+    "exampleResponse": {
+      "habits": 
+      {
+        "name" : "Drink more water",
+
+        " owner": "butter_bridge",
+        " body": "More info on your new habit" ,
+         "created_at": 1604728980000,
+         "frequency": "Once per Week",
+         "amount_days": 0,
+        " motivational_message":"yeah you can do it"
+     }
+      
+    }
+  }
+  }
