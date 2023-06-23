@@ -5,6 +5,7 @@ const { badRoute, handleCustomErrors, handlePSQL400s, handle500Statuses } = requ
 const { getFrequency } = require("./controllers/frequency.controllers");
 const { postHabits, patchDaysforHabits, getHabitsById, getHabitsByOwner, getHabits, deleteComments, deleteHabits } = require("./controllers/habits.controllers");
 const cors = require('cors');
+const { endpoints } = require("./controllers/api-controller");
 
 
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 
+app.get('/api', endpoints);
 
 app.get('/api/topics', getTopics);
 app.get('/api/frequency', getFrequency);

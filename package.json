@@ -1,7 +1,7 @@
 {
   "name": "be-habit",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "private":"false",
   "main": "listen.js",
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
